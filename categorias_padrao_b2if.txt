@@ -1,0 +1,195 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║          CATEGORIAS E SUBCATEGORIAS PADRÃO — B2IF  (versão 4.0)            ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Estrutura hierárquica:  MACRO  →  Categoria  →  Subcategoria
+Subcategorias são os níveis onde as transações são lançadas.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  MACRO 1 — RECEITAS
+──────────────────────────────────────────────────────────────────────────────
+
+  ▸ Trabalho CLT
+      • Salário
+      • Férias
+      • 13º Salário
+      • Bônus/PLR
+
+  ▸ Renda Variável
+      • Dividendos
+      • Rendimentos
+      • Juros Recebidos
+      • Renda Extra
+      • Aluguel Recebido
+
+  ▸ Entradas Não Recorrentes
+      • Reembolso
+      • Empréstimos Recebidos
+      • Restituição do IRPF
+      • Resgates
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  MACRO 2 — DESPESAS FIXAS
+──────────────────────────────────────────────────────────────────────────────
+
+  ▸ Moradia
+      • Aluguel/Prestação
+      • Condomínio
+      • IPTU
+      • Custos Imóveis
+      • Energia
+      • Água
+      • Gás
+      • Internet
+      • Telefone
+      • Celular
+
+  ▸ Saúde
+      • Plano de Saúde
+
+  ▸ Seguros
+      • Seguro de Vida
+      • Seguro de Carro
+      • Seguro Residencial
+
+  ▸ Educação
+      • Educação
+      • Faculdade/MBA
+      • Educação Filhos
+
+  ▸ Assinaturas
+      • Assinaturas
+
+  ▸ Transporte
+      • IPVA
+
+  ▸ Funcionário
+      • Funcionário
+      • Salário/Diária
+      • Encargos
+
+  ▸ Obrigações
+      • Anuidade
+      • Tarifas
+      • Impostos
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  MACRO 3 — CONSUMO MENSAL
+──────────────────────────────────────────────────────────────────────────────
+
+  ▸ Alimentação
+      • Supermercado
+      • Padaria
+
+  ▸ Transporte
+      • Gasolina
+      • Combustível
+      • Uber/Apps
+      • Carro
+      • Manutenção
+      • Estacionamento
+      • Aluguel de Carro
+
+  ▸ Saúde
+      • Farmácia/Drogaria
+      • Consulta
+
+  ▸ Bem-estar
+      • Academia
+      • Personal
+      • Esporte
+      • Beleza
+      • Cosméticos
+      • Cuidados Pessoais
+
+  ▸ Lazer
+      • Lazer
+      • Viagem
+      • Clube
+
+  ▸ Casa
+      • Casa
+      • Decoração
+      • Reforma
+
+  ▸ Livros e Cursos
+      • Livro/Curso
+      • Material Escolar
+
+  ▸ Pets
+      • Pets
+
+  ▸ Doações
+      • Doações
+
+  ▸ Saques
+      • Saque
+
+  ▸ Não Essencial
+      • Alimentação Fora
+      • Vestuário
+      • Acessórios
+      • Presente
+      • Papelaria
+      • Comemorações
+      • Festa de Aniversário
+      • Outros
+      • Sem categoria
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  MACRO 4 — DÍVIDAS
+──────────────────────────────────────────────────────────────────────────────
+
+  ▸ Dívidas
+      • Financiamento de Cartão
+      • Empréstimos
+      • Juros
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  MACRO 5 — INVESTIMENTOS
+──────────────────────────────────────────────────────────────────────────────
+
+  ▸ Investimentos
+      • Aplicações
+      • Previdência Privada
+      • Reserva de Emergência
+      • Custódia
+      • Custos Operacionais
+      • IOF
+      • IR
+      • Perdas
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  MACRO 6 — FLUXO INTERNO
+──────────────────────────────────────────────────────────────────────────────
+
+  ▸ Fluxo Interno
+      • Entre Contas
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+RESUMO
+──────────────────────────────────────────────────────────────────────────────
+
+  Macros              :  6
+  Categorias totais   : 26
+  Subcategorias totais: 79
+
+  Distribuição por macro:
+    Receitas           —  3 categorias  /  14 subcategorias
+    Despesas Fixas     —  8 categorias  /  20 subcategorias
+    Consumo Mensal     — 11 categorias  /  34 subcategorias
+    Dívidas            —  1 categoria   /   3 subcategorias
+    Investimentos      —  1 categoria   /   8 subcategorias
+    Fluxo Interno      —  1 categoria   /   1 subcategoria
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Nota: aliases de compatibilidade (drogaria, nao_lembro, compras_online)
+não são exibidos na UI — existem apenas para resolver lançamentos históricos.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Diagnóstico B2IF</title></head>
+<body style="background:#0a0a0a;color:#0f0;font-family:monospace;padding:20px">
+<h2 style="color:#fff">Diagnóstico B2IF — Gemini Stream</h2>
+<input type="file" id="pdf" accept=".pdf" style="margin-bottom:10px;display:block">
+<button onclick="run()" style="padding:8px 16px;margin-bottom:10px">Testar</button>
+<pre id="log" style="background:#111;padding:10px;height:500px;overflow:auto;font-size:12px;border:1px solid #333"></pre>
+<script type="module">
+import * as pdfjsLib from '/pdf.worker.min.mjs';
+
+const SUPA_URL  = 'https://mioppztwrhrbnkkhuubs.supabase.co';
+const SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pb3BwenR3cmhyYm5ra2h1dWJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MDQ0NjQsImV4cCI6MjA5MDQ4MDQ2NH0.opPC34brWzXzrTbtcXcn9Xl8ZO5WIBgkm1Fa9D6iaZU';
+const GEMINI_MODEL = 'gemini-2.5-flash';
+
+const logEl = document.getElementById('log');
+function L(msg) { logEl.textContent += msg + '\n'; logEl.scrollTop = logEl.scrollHeight; console.log(msg); }
+
+window.run = async function() {
+  logEl.textContent = '';
+  const file = document.getElementById('pdf').files[0];
+  if (!file) { L('Selecione um PDF primeiro'); return; }
+
+  try {
+    // 1. Busca chave Gemini
+    L('1. Buscando chave Gemini...');
+    const kr = await fetch(`${SUPA_URL}/functions/v1/get-gemini-key`, {
+      headers: { Authorization: `Bearer ${SUPA_ANON}`, apikey: SUPA_ANON }
+    });
+    L(`   HTTP: ${kr.status}`);
+    const kd = await kr.json();
+    if (!kd.key) throw new Error('Sem chave: ' + JSON.stringify(kd));
+    const key = kd.key;
+    L(`   Chave OK: ...${key.slice(-6)}`);
+
+    // 2. Lê PDF como base64
+    L('2. Convertendo PDF para base64...');
+    const b64 = await new Promise((res, rej) => {
+      const fr = new FileReader();
+      fr.onload = e => res(e.target.result.split(',')[1]);
+      fr.onerror = rej;
+      fr.readAsDataURL(file);
+    });
+    L(`   base64: ${b64.length} chars`);
+
+    // 3. Testa streamGenerateContent com inline_data (mesma arquitetura que funcionava)
+    L('3. Chamando Gemini streamGenerateContent com inline_data...');
+    const t0 = Date.now();
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:streamGenerateContent?alt=sse&key=${key}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [
+            { text: 'Identifique se é fatura ou extrato. Retorne apenas: {"tipo":"fatura"} ou {"tipo":"extrato"}' },
+            { inline_data: { mime_type: 'application/pdf', data: b64 } }
+          ]}],
+          generationConfig: { temperature: 0.1, maxOutputTokens: 64 }
+        })
+      }
+    );
+    L(`   Gemini HTTP: ${res.status}`);
+    if (!res.ok) { L('   ERRO: ' + await res.text()); return; }
+
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '', full = '', chunks = 0;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split('\n'); buf = lines.pop() ?? '';
+      for (const line of lines) {
+        if (!line.startsWith('data:')) continue;
+        const raw = line.slice(5).trim();
+        if (!raw || raw === '[DONE]') continue;
+        try {
+          const obj = JSON.parse(raw);
+          const text = obj?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+          if (text) { full += text; chunks++; L(`   chunk ${chunks}: "${text.replace(/\n/g,'\\n')}"`); }
+        } catch(e) { L('   parse err: ' + e.message + ' | raw: ' + raw.substring(0,100)); }
+      }
+    }
+    const elapsed = ((Date.now()-t0)/1000).toFixed(1);
+    L(`\n✅ SUCESSO em ${elapsed}s | ${chunks} chunks | Resposta: ${full}`);
+  } catch(e) {
+    L('❌ ERRO CRÍTICO: ' + e.message);
+    L(e.stack || '');
+  }
+};
+</script>
+</body>
+</html>
