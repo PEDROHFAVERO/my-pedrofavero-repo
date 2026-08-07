@@ -58,10 +58,10 @@ export function AppProvider({
   // ── Período global sincronizado entre Dashboard e Planejador ──────────────
   const [periodoAtivo, setPeriodoAtivoState]  = useState(new Date().getMonth()); // 0-11
 
-  // Persiste página ativa no localStorage para sobreviver ao reload
+  // NÃO persiste mais página no localStorage — ao reabrir o sistema, o
+  // comportamento correto é sempre iniciar no hub (planejador) ou dashboard (cliente).
   const setPaginaAtual = useCallback((pagina) => {
     setPaginaAtualState(pagina);
-    try { localStorage.setItem('b2if_pagina_ativa', pagina); } catch {}
   }, []);
 
   const debounceRef             = useRef(null);
@@ -116,25 +116,14 @@ export function AppProvider({
       setHub(novoHub);
       hubRef.current = novoHub;
 
-      // Restaura sessão anterior: cliente e página salvos no localStorage
+      // NÃO restaura sessão anterior do localStorage.
+      // Ao abrir o sistema, o planejador sempre começa no hub limpo (sem cliente ativo).
+      // Isso evita que o planejador caia dentro da conta de um cliente ao reabrir,
+      // e elimina interferência com o acesso paralelo de clientes.
+      // Limpa chaves legadas caso existam de versões anteriores:
       try {
-        const clienteIdSalvo = localStorage.getItem('b2if_cliente_ativo_id');
-        const paginaSalva    = localStorage.getItem('b2if_pagina_ativa');
-        if (clienteIdSalvo) {
-          const c = clientes.find(x => x.id === clienteIdSalvo);
-          if (c) {
-            const cAtualizado = { ...JSON.parse(JSON.stringify(c)), categorias: sincronizarCategorias(c.categorias, c.setupCompleto) };
-            cAtualizado.transacoes = migrarTransacoesLegadas(cAtualizado.transacoes);
-            setClienteAtivoState(cAtualizado);
-            // Restaura página válida (dashboard, categorizador, planejador)
-            const paginasValidas = ['dashboard', 'categorizador', 'planejador'];
-            if (paginaSalva && paginasValidas.includes(paginaSalva)) {
-              setPaginaAtualState(paginaSalva);
-            } else {
-              setPaginaAtualState('dashboard');
-            }
-          }
-        }
+        localStorage.removeItem('b2if_cliente_ativo_id');
+        localStorage.removeItem('b2if_pagina_ativa');
       } catch {}
 
       setHubCarregado(true);
@@ -513,8 +502,6 @@ export function AppProvider({
     });
     if (navegarAoAbrir) {
       setClienteAtivoState(novo);
-      // Persiste ID no localStorage para sobreviver ao reload
-      try { localStorage.setItem('b2if_cliente_ativo_id', novo.id); } catch {}
       setPaginaAtual('dashboard');
     }
     return novo;
@@ -527,7 +514,6 @@ export function AppProvider({
       const cAtualizado = { ...JSON.parse(JSON.stringify(c)), categorias: catsSincronizadas };
       cAtualizado.transacoes = migrarTransacoesLegadas(cAtualizado.transacoes);
       setClienteAtivoState(cAtualizado);
-      try { localStorage.setItem('b2if_cliente_ativo_id', clienteId); } catch {}
       setPaginaAtual('dashboard');
       // BUG7 FIX: Persistir sincronização de categorias no banco imediatamente
       // (antes só ficava em memória, perdia ao não fazer nenhuma outra edição)
@@ -578,10 +564,6 @@ export function AppProvider({
     }
 
     setClienteAtivoState(clienteAtualizado);
-    // Persiste ID do cliente ativo para restaurar após reload
-    try {
-      localStorage.setItem('b2if_cliente_ativo_id', clienteAtualizado.id);
-    } catch {}
     if (modoLeitura) return;
     setHub(h => {
       const next = {
@@ -613,10 +595,6 @@ export function AppProvider({
     setClienteAtivoState(null);
     setIsDirty(false);
     setPaginaAtual('hub');
-    try {
-      localStorage.removeItem('b2if_cliente_ativo_id');
-      localStorage.removeItem('b2if_pagina_ativa');
-    } catch {}
   }, [setPaginaAtual]);
 
   // ── Setter do período global (sincroniza mes entre páginas) ────────────────
