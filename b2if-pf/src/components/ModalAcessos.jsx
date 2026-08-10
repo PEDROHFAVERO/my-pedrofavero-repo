@@ -9,7 +9,7 @@
  *   onClose    () => void
  */
 import { useState, useEffect } from 'react';
-import { User, Lock, Key, Trash2, Eye, Pencil, AlertTriangle } from 'lucide-react';
+import { User, Lock, Key, Trash2, Eye, Pencil, AlertTriangle, CheckCircle, ShieldCheck, ShieldOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext.jsx';
 import { C, FONT, RADIUS } from '../design/tokens.js';
 
@@ -230,15 +230,39 @@ export default function ModalAcessos({ open, clienteId, clienteNome, onClose }) 
                         </div>
                       </div>
 
-                      {/* Linha 2: toggle de modo */}
-                      <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
+                      {/* Linha 2: toggle de modo + badge de confirmação */}
+                      <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                         <span style={{ fontSize: FONT.xs, color: C.textMuted, flexShrink: 0 }}>Modo de acesso:</span>
                         <ModoToggle
                           isEditor={isEditor}
                           loading={loading}
                           onChange={novoModo => handleAlterarModo(a.user_id, novoModo)}
                         />
+                        {/* Badge de confirmação — mostra o que está salvo no banco */}
+                        <div style={{
+                          display: 'inline-flex', alignItems: 'center', gap: 4,
+                          fontSize: 10, fontWeight: 700,
+                          padding: '3px 8px', borderRadius: 999,
+                          background: isEditor ? '#C084FC18' : C.brand + '15',
+                          color: isEditor ? '#C084FC' : C.brand,
+                          border: `1px solid ${isEditor ? '#C084FC44' : C.brand + '44'}`,
+                        }}>
+                          {isEditor
+                            ? <><ShieldCheck size={10} /> Salva edições no banco</>
+                            : <><ShieldOff size={10} /> Somente leitura</>
+                          }
+                        </div>
                       </div>
+                      {/* Nota explicativa apenas para editor */}
+                      {isEditor && (
+                        <div style={{
+                          marginTop: 6, fontSize: 10, color: C.textMuted,
+                          display: 'flex', alignItems: 'center', gap: 4,
+                        }}>
+                          <CheckCircle size={10} style={{ color: '#4ade80', flexShrink: 0 }} />
+                          Tudo que este acesso alterar será salvo automaticamente e gerará versões no histórico.
+                        </div>
+                      )}
                     </div>
                   );
                 })}

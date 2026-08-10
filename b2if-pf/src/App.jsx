@@ -208,7 +208,7 @@ function Router() {
 
 // ── Router para cliente ───────────────────────────────────────────────────────
 function RouterCliente({ isEditor = false }) {
-  const { paginaAtual, setPaginaAtual, clienteAtivo, criarCheckpoint, isDirty, modoLeitura } = useApp();
+  const { paginaAtual, setPaginaAtual, clienteAtivo, criarCheckpoint, isDirty, modoLeitura, salvando, erroSalvar, forceSave } = useApp();
   const { hubCarregado } = useHub();
   const { sessao, logout } = useAuth();
   const [visitadas, setVisitadas] = useState(() => new Set(['dashboard']));
@@ -256,8 +256,8 @@ function RouterCliente({ isEditor = false }) {
         limparManagerViewing={null}
         onToggleNotas={null}
         notasAberto={false}
-        salvando={false}
-        erroSalvar={null}
+        salvando={isEditor ? salvando : false}
+        erroSalvar={isEditor ? erroSalvar : null}
         onLogout={logout}
         isEditor={isEditor}
       />
@@ -279,6 +279,16 @@ function RouterCliente({ isEditor = false }) {
             </div>
           )}
         </Suspense>
+
+        {/* SaveBar — cliente editor vê o indicador de salvamento igual ao planejador */}
+        {isEditor && clienteAtivo && !modoLeitura && (
+          <SaveBar
+            isDirty={isDirty}
+            salvando={salvando}
+            erroSalvar={erroSalvar}
+            onSave={forceSave}
+          />
+        )}
 
         {/* Checkpoint FAB — sempre visível para cliente editor com cliente ativo */}
         {isEditor && clienteAtivo && !modoLeitura && (
