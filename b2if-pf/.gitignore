@@ -12,6 +12,18 @@ dist
 dist-ssr
 *.local
 
+# Variáveis de ambiente — nunca commitar credenciais reais
+.env
+.env.local
+.env.*.local
+
+# Arquivos de build/exportação locais
+dist.tar.gz
+dist.zip
+*.docx
+*.pdf
+test.*
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,7 +34,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+core
+*.core
+.env.deploy
 
-# Dados internos
-dados_clientes/
 .env.deploy

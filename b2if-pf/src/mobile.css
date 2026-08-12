@@ -1,0 +1,315 @@
+/*
+ * mobile.css — Ajustes EXCLUSIVOS para telas ≤ 768px
+ * Nenhuma regra aqui afeta o desktop.
+ * Todas as classes aqui têm prefixo "mb-" para não colidir.
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  /* Container da navbar — vira duas linhas */
+  .mb-navbar-outer {
+    padding: 0 12px !important;
+  }
+
+  .mb-navbar-inner {
+    height: auto !important;
+    flex-wrap: wrap !important;
+    padding: 8px 0 !important;
+    gap: 6px !important;
+  }
+
+  /* Logo — menor */
+  .mb-navbar-logo span {
+    display: none; /* oculta "B2IF PF" no mobile, fica só o ícone */
+  }
+
+  /* Abas — scroll horizontal */
+  .mb-navbar-tabs {
+    flex: none !important;
+    width: 100% !important;
+    order: 3 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding-bottom: 4px !important;
+  }
+
+  .mb-navbar-tabs::-webkit-scrollbar { display: none; }
+
+  .mb-navbar-tabs button {
+    padding: 0 12px !important;
+    height: 40px !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Ações (logout etc.) — ficam na direita da linha do logo */
+  .mb-navbar-actions {
+    margin-left: auto !important;
+  }
+
+  .mb-navbar-actions button {
+    font-size: 11px !important;
+    padding: 3px 8px !important;
+  }
+
+  /* Barra de contexto Manager */
+  .mb-manager-bar {
+    font-size: 11px !important;
+    padding: 4px 12px !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   LAYOUT GERAL DE PÁGINA
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  /* Padding lateral das páginas */
+  .mb-page {
+    padding: 16px 12px !important;
+  }
+
+  /* Grid de 5 colunas → 2 colunas */
+  .mb-grid-5 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Grid de 4 colunas → 2 colunas */
+  .mb-grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Grid de 2 colunas (gráfico + sidebar) → 1 coluna */
+  .mb-grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Grid 1fr 320px ou 1fr 340px → 1 coluna */
+  .mb-grid-main {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   DASHBOARD — CARDS DE TOTAIS
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  .mb-totais-card {
+    padding: 14px !important;
+  }
+
+  .mb-totais-valor {
+    font-size: 20px !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   DASHBOARD — GRÁFICOS
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  /* Gráfico de linhas — altura fixa para não ficar minúsculo */
+  .mb-chart-area {
+    min-height: 260px !important;
+  }
+
+  /* Gráfico de barras mensal */
+  .mb-barchart-area {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* SVG do gráfico de linhas — altura mínima */
+  .mb-chart-area svg {
+    min-height: 240px !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   DASHBOARD — ABAS MACRO (Visão Geral, Receitas, etc.)
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  .mb-abas-macro {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    flex-wrap: nowrap !important;
+    gap: 0 !important;
+  }
+
+  .mb-abas-macro::-webkit-scrollbar { display: none; }
+
+  .mb-abas-macro button {
+    font-size: 12px !important;
+    padding: 0 12px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    height: 40px !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   DASHBOARD — SELETOR DE MESES
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  .mb-meses-wrapper {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  .mb-meses-wrapper button {
+    min-width: 52px !important;
+    font-size: 12px !important;
+    padding: 5px 8px !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   DASHBOARD — TABELA ANUAL (scroll horizontal)
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  .mb-table-scroll {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .mb-table-scroll table {
+    min-width: 600px !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   DASHBOARD — HEADER DE PÁGINA (título + filtros)
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  .mb-page-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .mb-page-header h1,
+  .mb-page-header h2 {
+    font-size: 20px !important;
+  }
+
+  /* Select de contas + botão PDF — viram linha própria */
+  .mb-header-actions {
+    width: 100% !important;
+    display: flex !important;
+    gap: 8px !important;
+  }
+
+  .mb-header-actions select {
+    flex: 1 !important;
+    font-size: 13px !important;
+  }
+
+  .mb-header-actions button {
+    font-size: 12px !important;
+    white-space: nowrap !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   HUB — LISTA DE CLIENTES
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  .mb-hub-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    padding: 16px 12px !important;
+  }
+
+  .mb-hub-header button {
+    font-size: 13px !important;
+  }
+
+  .mb-hub-list {
+    padding: 12px !important;
+    gap: 10px !important;
+  }
+
+  .mb-hub-card {
+    padding: 14px !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   PLANEJADOR — TABELA
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  .mb-plan-table-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .mb-plan-table-wrap table {
+    min-width: 700px !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   CATEGORIZADOR
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  .mb-cat-layout {
+    flex-direction: column !important;
+  }
+
+  .mb-cat-sidebar {
+    width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid #1E2D45 !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   LOGIN
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  .mb-login-card {
+    margin: 20px 16px !important;
+    padding: 28px 20px !important;
+  }
+}
